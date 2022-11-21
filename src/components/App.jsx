@@ -1,6 +1,9 @@
 import React from 'react';
 import Title from './common/Title';
 import ContactForm from './ContactForm';
+import SubTitle from './common/SubTitle';
+import Filter from './Filter';
+import ContactList from './ContactList';
 
 class App extends React.Component {
   state = {
@@ -35,11 +38,28 @@ class App extends React.Component {
     }));
   };
 
+  setSearchQuery = value => {
+    this.setState(prevState => ({
+      ...prevState,
+      searchQuery: value,
+    }));
+  };
+
   render() {
+    const { searchQuery, contacts } = this.state;
+
     return (
       <div className="app">
         <Title title="Phonebook" />
         <ContactForm addContact={this.addContact} />
+
+        <SubTitle title="Contacts" />
+        <Filter setSearchQuery={this.setSearchQuery} value={searchQuery} />
+        <ContactList
+          contacts={contacts}
+          searchQuery={searchQuery}
+          deleteContact={this.deleteContact}
+        />
       </div>
     );
   }
